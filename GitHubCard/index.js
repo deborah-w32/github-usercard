@@ -55,15 +55,6 @@ import axios from 'axios'
     and append the returned markup to the DOM as a child of .cards
 */
 
-const deborahData = 'https://api.github.com/users/deborah-w32'
-axios.get(deborahData)
-.then( () => {
-  console.log('Patrolling the Mojave')
-})
-.catch( () => {
-  console.log('Retribution!')
-});
-
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -75,7 +66,7 @@ axios.get(deborahData)
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -97,6 +88,61 @@ const followersArray = [];
     </div>
 */
 
+const deborahData = 'https://api.github.com/users/deborah-w32'
+const tetondanData = 'https://api.github.com/users/tetondan'
+const dustinmyersData = 'https://api.github.com/users/dustinmyers'
+const justsmlData = 'https://api.github.com/users/justsml'
+const luishrdData = 'https://api.github.com/users/luishrd'
+const bigknellData = 'https://api.github.com/users/bigknell'
+
+axios.get(deborahData)
+.then( () => {
+  console.log('Patrolling the Mojave')
+})
+.catch( () => {
+  console.log('Retribution!')
+});
+
+function githubCardMaker(cardDataObj){
+
+  const card = document.createElement('div')
+  const imgURL = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const userNameH3 = document.createElement('h3')
+  const userName = document.createElement('p')
+  const userProfile = document.createElement('p')
+  const userFollowers = document.createElement('p')
+  const userFollowing = document.createElement('p')
+  const userBio = document.createElement('p')
+  
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  userNameH3.classList.add('name')
+  userName.classList.add('username')
+
+  card.appendChild(imgURL)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(userNameH3)
+  cardInfo.appendChild(userName)
+  cardInfo.appendChild(userProfile)
+  cardInfo.appendChild(userFollowers)
+  cardInfo.appendChild(userFollowing)
+  cardInfo.appendChild(userBio)
+
+  imgURL.src = cardDataObj.avatar_url
+  userNameH3.textContent = cardDataObj.name
+
+  return card
+}
+
+console.log(deborahData)
+githubCardMaker(deborahData)
+githubCardMaker(tetondanData)
+githubCardMaker(dustinmyersData)
+githubCardMaker(justsmlData)
+githubCardMaker(luishrdData)
+githubCardMaker(bigknellData)
+console.log('Nuclear Winter')
 /*
   List of LS Instructors Github username's:
     tetondan
