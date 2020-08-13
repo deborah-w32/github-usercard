@@ -166,8 +166,6 @@ function githubCardMaker(gitData){
 }
 
 userInfo('deborah-w32')
-
-console.log('Nuclear Winter')
 /*
   List of LS Instructors Github username's:
     tetondan
@@ -197,8 +195,8 @@ function followerUserInfo(usernames) {
       })
       .catch((error) => {
         console.log(error)
-      });
-  });
+      })
+  })
 }
 
 
