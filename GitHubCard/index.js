@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -49,6 +51,133 @@ const followersArray = [];
       </div>
     </div>
 */
+const entryPoint = document.querySelector('div.cards')
+
+function userData(userName){
+  axios.get(`https://api.github.com/users/${userName}`)
+    .then((res) => {
+      let user = {
+      image: res.data.avatar_url,
+      name: res.data.name,
+      username: res.data.login,
+      location: res.data.location,
+      githubLink: res.data.html_url,
+      followers: res.data.followers,
+      following: res.data.following,
+      bio: res.data.bio,
+    }
+    gitCardMaker(user)
+    entryPoint.appendChild(gitCardMaker(user))
+    })
+    .catch((err) => {
+      console.log('ERROR: ', err)
+    })
+}
+
+function gitCardMaker(gitData){
+  let {
+    image,
+    name,
+    username,
+    location,
+    githubLink,
+    followers,
+    following,
+    bio
+  } = gitData
+
+  const card = document.createElement('div')
+  const imgURL = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const nameH3 = document.createElement('h3')
+  const userHandle = document.createElement('p')
+  const userLocation = document.createElement('p')
+  const userProfile = document.createElement('p')
+  const profileLink = document.createElement('a')
+  const userFollowers = document.createElement('p')
+  const userFollowing = document.createElement('p')
+  const userBio = document.createElement('p')
+
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  nameH3.classList.add('name')
+  userHandle.classList.add('username')
+  
+
+  card.appendChild(imgURL)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(nameH3)
+  cardInfo.appendChild(userHandle)
+  cardInfo.appendChild(userLocation)
+  cardInfo.appendChild(userProfile)
+  cardInfo.appendChild(profileLink)
+  cardInfo.appendChild(userFollowers)
+  cardInfo.appendChild(userFollowing)
+  cardInfo.appendChild(userBio)
+
+  imgURL.src = image
+  nameH3.textContent = name
+  userHandle.textContent = username
+  userLocation.textContent = location
+  profileLink.href = githubLink
+  // profileLink.textContent = githubLink
+  userFollowers.textContent = followers
+  userFollowing.textContent = following
+  userBio.textContent = bio
+
+  return card
+}
+userData('deborah-w32')
+
+
+
+
+function followerData(friendUserName) {
+  friendUserName.forEach((person) => {
+    axios
+      .get(`https://api.github.com/users/${person}`)
+      .then((response) => {
+        let user = {
+          image: response.data.avatar_url,
+          name: response.data.name,
+          username: response.data.login,
+          location: response.data.location,
+          githubLink: response.data.html_url,
+          followers: response.data.followers,
+          following: response.data.following,
+          bio: response.data.bio,
+        }
+        gitCardMaker(user)
+        entryPoint.appendChild(gitCardMaker(user))
+      })
+      .catch((error) => {
+        console.log('FOLLOWERDATA ERROR: ', error)
+      })
+  })
+}
+
+
+
+function gitFollowers(userData){
+  axios
+  .get(`https://api.github.com/users/${userData}/followers`)
+  .then((response) => {
+    let arr = response.data
+    let followerList = []
+    arr.forEach((follower) => {
+      followerList.push(follower.login)
+    })
+    followerData(followerList)
+  })
+  .catch((err) => {
+    console.log('FOLLOWER ERROR: ', err)
+  })
+}
+
+gitFollowers('deborah-w32')
+
+
+
 
 /*
   List of LS Instructors Github username's:
